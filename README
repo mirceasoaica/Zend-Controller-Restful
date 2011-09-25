@@ -1,0 +1,54 @@
+##About
+
+This class will automatically export results in JSON (default), XMl or PHP Serialized.
+Using this class will disable the layout and view rendering.
+
+ATTENTION!
+This class does not handle authentication or API keys.
+
+##Usage
+
+class NewsController extends Zend_Controller_Restful 
+{
+	public function listAction()
+	{
+		$response = array(
+			'success' => true,
+			'nrItems' => 3,
+			'items' => array(
+				'item1',
+				'item2',
+				'item3'
+			)
+		);
+		
+		$this->data = $response; // value of $this->data will be automatically encoded in the format requested and sent as the response
+	}
+}
+
+
+
+http://yourwebsite.com/news/list :
+
+{"success":true,"nrItems":3,"items":["item1","item2","item3"]}
+
+
+
+
+http://yourwebsite.com/news/list?callback=yourCallback :
+
+yourCallback({"success":true,"nrItems":3,"items":["item1","item2","item3"]});
+
+
+
+
+http://yourwebsite.com/news/list?format=xml :
+
+<?xml version="1.0" encoding="utf-8"?>
+<Response><success>1</success><nrItems>3</nrItems><items>item1</items><items>item2</items><items>item3</items></Response>
+
+
+
+
+http://yourwebsite.com/news/list?format=php :
+a:3:{s:7:"success";b:1;s:7:"nrItems";i:3;s:5:"items";a:3:{i:0;s:5:"item1";i:1;s:5:"item2";i:2;s:5:"item3";}}
